@@ -11,10 +11,6 @@ env/
 # Misc stuff
 solution/
 pizzasize.py
-# code coverage
-.coverage
-htmlcov/
-coverage
 
 # IDE and MacOS files
 .idea/
