@@ -60,12 +60,3 @@ class Customer:
 
         return result
 
-
-if __name__ == "__main__":
-    customer = Customer("Edward Snowden")
-    print(customer.statement())
-    movie = Movie("Hacker Noon", 2000, ['demo'])
-    customer.add_rental(Rental(movie, 2, PriceCode.normal))
-    movie = Movie("CitizenFour", 2000, ['demo'])
-    customer.add_rental(Rental(movie, 3, PriceCode.new_release))
-    print(customer.statement())

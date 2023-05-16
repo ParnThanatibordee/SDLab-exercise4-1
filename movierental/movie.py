@@ -89,15 +89,3 @@ class Movie:
     def __str__(self):
         return self._title
 
-
-if __name__ == '__main__':
-    catalog = MovieCatalog()
-    movie = catalog.get_movie("Eternals")
-    price_code = PriceCode.for_movie(movie)
-    print(movie, 'is', price_code)
-    movie = catalog.get_movie("Deadpool")
-    price_code = PriceCode.for_movie(movie)
-    print(movie, 'is', price_code)
-    movie = catalog.get_movie("Mulan")
-    price_code = PriceCode.for_movie(movie)
-    print(movie, 'is', price_code)
