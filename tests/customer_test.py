@@ -25,7 +25,7 @@ class CustomerTest(unittest.TestCase):
 		self.childrens_movie = Movie("Frozen", 2000, ['demo'])
 		
 	@unittest.skip("No convenient way to test")
-	def test_billing():
+	def test_billing(self):
 		# no convenient way to test billing since its buried in the statement() method.
 		pass
 	
