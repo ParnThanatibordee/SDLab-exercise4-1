@@ -12,3 +12,5 @@ jobs:
             #pip install -r requirements.txt
         - name: Run Tests
           run: python -m unittest tests/*.py
+        - name: Upload coverage reports to Codecov
+          uses: codecov/codecov-action@v3
