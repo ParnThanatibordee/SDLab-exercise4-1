@@ -40,6 +40,32 @@ class RentalTest(unittest.TestCase):
 		rental = Rental(self.childrens_movie, 5, PriceCode.childrens)
 		self.assertEqual(rental.get_price(), 4.5)
 
+	def test_get_price_code(self):
+		rental = Rental(self.new_movie, 5, PriceCode.new_release)
+		self.assertEqual(rental.get_price_code(), PriceCode.new_release)
+	
+	def test_get_movie(self):
+		rental = Rental(self.new_movie, 5, PriceCode.new_release)
+		self.assertEqual(rental.get_movie(), self.new_movie)
+
+	def test_get_days_rented(self):
+		rental = Rental(self.new_movie, 5, PriceCode.new_release)
+		self.assertEqual(rental.get_days_rented(), 5)
+
+	def test_get_price(self):
+		rental = Rental(self.new_movie, 5, PriceCode.new_release)
+		self.assertEqual(rental.get_price_code(), PriceCode.new_release)
+
+		self.assertEqual(rental.get_price_code().price(rental.days_rented), 15)
+
+	def test_get_price_with_invalid_price_code(self):
+		with self.assertLogs('rental', level='ERROR') as cm:
+			rental = Rental(self.new_movie, 5, "invalid")
+			rental.get_price()
+			
+			self.assertEqual(cm.output, [f'ERROR:rental:Movie {rental.get_movie()} has unrecognized priceCode {rental.get_price_code()}'])
+		
+
 	def test_rental_points(self):
 		# Movie.REGULAR
 		rental = Rental(self.regular_movie, 1, PriceCode.normal)

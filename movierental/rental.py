@@ -37,8 +37,8 @@ class Rental:
 		if isinstance(self.price_code, PriceCode):
 			return self.price_code.price(self.days_rented)
 		else:
-			log = logging.getLogger()
-			log.error(f"Movie {self} has unrecognized priceCode {self.get_price_code()}")
+			log = logging.getLogger("rental")
+			log.error(f"Movie {self.movie} has unrecognized priceCode {self.get_price_code()}")
 
 	def get_frequent(self):
 		# award renter points
