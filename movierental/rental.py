@@ -1,4 +1,4 @@
-from movie import PriceCode
+from movierental.movie import PriceCode
 import logging
 
 
