@@ -41,17 +41,17 @@ class PriceCode(Enum):
                  }
 
     def price(self, days: int) -> float:
-        "Return the rental price for a given number of days"""
+        "Return the rental price for a given number of days"
         pricing = self.value["price"]  # the enum member's price formula
         return pricing(days)
 
     def frequent(self, days: int) -> float:
-        "Return the frequent renter points for a given number of days"""
+        "Return the frequent renter points for a given number of days"
         frequent = self.value["frp"]
         return frequent(days)
 
     @classmethod
-    def for_movie(self, movie):
+    def for_movie(cls, movie):
         current_date_time = datetime.datetime.now()
         date = current_date_time.date()
         if date.year == movie.get_year():
