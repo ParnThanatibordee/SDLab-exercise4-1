@@ -28,6 +28,35 @@ class CustomerTest(unittest.TestCase):
 	def test_billing(self):
 		# no convenient way to test billing since its buried in the statement() method.
 		pass
+
+	def test_created_customer(self):
+		self.assertEqual(self.c.get_name(), "Movie Mogul")
+		self.assertFalse(self.c.rentals)
+
+		customer = Customer("Johnny Depp")
+		self.assertEqual(customer.get_name(), "Johnny Depp")
+		self.assertFalse(customer.rentals)
+
+	def test_add_rental(self):
+		self.assertFalse(self.c.rentals)
+
+		self.c.add_rental(Rental(self.new_movie, 1, PriceCode.new_release))
+
+		self.assertTrue(self.c.rentals)
+		self.assertEqual(len(self.c.rentals), 1)
+
+	def test_add_repetitive_rental(self):
+		self.assertFalse(self.c.rentals)
+
+		movie = Rental(self.new_movie, 1, PriceCode.new_release)
+		self.c.add_rental(movie)
+		self.c.add_rental(movie)
+
+		self.assertTrue(self.c.rentals)
+		self.assertEqual(len(self.c.rentals), 1)
+
+	def test_get_name(self):
+		self.assertEqual(self.c.name, self.c.get_name())
 	
 	def test_statement(self):
 		stmt = self.c.statement()
@@ -44,3 +73,22 @@ class CustomerTest(unittest.TestCase):
 		matches = re.match(pattern, stmt.replace('\n', ''), flags=re.DOTALL)
 		self.assertIsNotNone(matches)
 		self.assertEqual("12.00", matches[1])
+
+	def test_get_total_amount(self):
+		self.c.add_rental(Rental(self.new_movie, 1, PriceCode.new_release))
+		
+		self.assertEqual(self.c.get_total_amount(), self.c.rentals[0].get_price())
+
+		self.c.add_rental(Rental(self.regular_movie, 1, PriceCode.normal))
+		self.c.add_rental(Rental(self.childrens_movie, 1, PriceCode.childrens))
+		self.assertEqual(self.c.get_total_amount(), self.c.rentals[0].get_price() + self.c.rentals[1].get_price() + self.c.rentals[2].get_price())
+
+	def test_get_frequent_amount(self):
+		self.c.add_rental(Rental(self.new_movie, 1, PriceCode.new_release))
+		
+		self.assertEqual(self.c.get_frequent_renter_points(), self.c.rentals[0].get_frequent())
+
+		self.c.add_rental(Rental(self.regular_movie, 1, PriceCode.normal))
+		self.c.add_rental(Rental(self.childrens_movie, 1, PriceCode.childrens))
+		self.assertEqual(self.c.get_frequent_renter_points(), self.c.rentals[0].get_frequent() + self.c.rentals[1].get_frequent() + self.c.rentals[2].get_frequent())
+
