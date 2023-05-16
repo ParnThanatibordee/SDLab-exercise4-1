@@ -1,3 +1,8 @@
+"""Tests of the Rental.
+
+Author: Thanatibordee Sihaboonthong
+"""
+
 import unittest
 from movierental.customer import Customer
 from movierental.rental import Rental

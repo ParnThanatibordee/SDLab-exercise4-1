@@ -1,3 +1,8 @@
+"""Tests of the Customer.
+
+Author: Thanatibordee Sihaboonthong
+"""
+
 import re
 import unittest 
 from movierental.customer import Customer
