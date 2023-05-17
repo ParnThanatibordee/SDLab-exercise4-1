@@ -1,5 +1,6 @@
 from enum import Enum
 import datetime
+import logging
 import csv
 
 
@@ -42,13 +43,19 @@ class PriceCode(Enum):
 
     def price(self, days: int) -> float:
         "Return the rental price for a given number of days"
-        pricing = self.value["price"]  # the enum member's price formula
-        return pricing(days)
+        if days > 0:
+            pricing = self.value["price"]  # the enum member's price formula
+            return pricing(days)
+        else:
+            raise ValueError('days should be a positive number')
 
     def frequent(self, days: int) -> float:
         "Return the frequent renter points for a given number of days"
-        frequent = self.value["frp"]
-        return frequent(days)
+        if days > 0:
+            frequent = self.value["frp"]
+            return frequent(days)
+        else:
+            raise ValueError('days should be a positive number')
 
     @classmethod
     def for_movie(cls, movie):

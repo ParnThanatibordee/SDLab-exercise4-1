@@ -9,15 +9,88 @@ from movierental.rental import Rental
 from movierental.movie import Movie, PriceCode
 
 
+class PriceCodeTest(unittest.TestCase):
+    """Tests of the PriceCode Enum class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up an PriceCode Enum before test."""
+
+        cls.new_release = PriceCode.new_release
+        cls.normal = PriceCode.normal
+        cls.childrens = PriceCode.childrens
+
+    def test_price(self):
+        self.assertEqual(self.new_release.price(1), 3)
+        self.assertEqual(self.new_release.price(5), 15)
+
+        self.assertEqual(self.normal.price(1), 2)
+        self.assertEqual(self.normal.price(5), 6.5)
+
+        self.assertEqual(self.childrens.price(1), 1.5)
+        self.assertEqual(self.childrens.price(5), 4.5)
+
+    def test_invalid_price(self):
+        with self.assertRaises(ValueError):
+            self.new_release.price(0)
+        
+        with self.assertRaises(ValueError):
+            self.new_release.price(-1)
+
+        with self.assertRaises(ValueError):
+            self.normal.price(0)
+        
+        with self.assertRaises(ValueError):
+            self.normal.price(-1)
+
+        
+        with self.assertRaises(ValueError):
+            self.childrens.price(0)
+        
+        with self.assertRaises(ValueError):
+            self.childrens.price(-1)
+
+    def test_frequent(self):
+        self.assertEqual(self.new_release.frequent(1), 1)
+        self.assertEqual(self.new_release.frequent(5), 5)
+
+        self.assertEqual(self.normal.frequent(1), 1)
+        self.assertEqual(self.normal.frequent(5), 1)
+
+        self.assertEqual(self.childrens.frequent(1), 1)
+        self.assertEqual(self.childrens.frequent(5), 1)
+
+    def test_invalid_frequent(self):
+        with self.assertRaises(ValueError):
+            self.new_release.frequent(0)
+        
+        with self.assertRaises(ValueError):
+            self.new_release.frequent(-1)
+
+        with self.assertRaises(ValueError):
+            self.normal.frequent(0)
+        
+        with self.assertRaises(ValueError):
+            self.normal.frequent(-1)
+
+        
+        with self.assertRaises(ValueError):
+            self.childrens.frequent(0)
+        
+        with self.assertRaises(ValueError):
+            self.childrens.frequent(-1)
+
+
 class MovieTest(unittest.TestCase):
     """ Tests of the Movie class"""
-    
-    def setUp(self):
+
+    @classmethod
+    def setUpClass(cls):
         """Set up an Movie class before test."""
-        
-        self.new_movie = Movie("Mulan", 2000, ['demo'])
-        self.regular_movie = Movie("CitizenFour", 2000, ['demo'])
-        self.childrens_movie = Movie("Frozen", 2000, ['demo'])
+
+        cls.new_movie = Movie("Mulan", 2000, ['demo'])
+        cls.regular_movie = Movie("CitizenFour", 2000, ['demo'])
+        cls.childrens_movie = Movie("Frozen", 2000, ['demo'])
 
     def test_get_title(self):
         self.assertEqual(self.new_movie.get_title(), "Mulan")
