@@ -20,6 +20,10 @@ class PriceCodeTest(unittest.TestCase):
         cls.normal = PriceCode.normal
         cls.childrens = PriceCode.childrens
 
+        cls.new_movie = Movie("Mulan", 2023, ['demo'])
+        cls.regular_movie = Movie("CitizenFour", 2000, ['demo'])
+        cls.childrens_movie = Movie("Frozen", 2000, ['Children'])
+
     def test_price(self):
         self.assertEqual(self.new_release.price(1), 3)
         self.assertEqual(self.new_release.price(5), 15)
@@ -79,6 +83,11 @@ class PriceCodeTest(unittest.TestCase):
         
         with self.assertRaises(ValueError):
             self.childrens.frequent(-1)
+
+    def test_for_movie(self):
+        self.assertIs(PriceCode.for_movie(self.new_movie), PriceCode.new_release)
+        self.assertIs(PriceCode.for_movie(self.regular_movie), PriceCode.normal)
+        self.assertIs(PriceCode.for_movie(self.childrens_movie), PriceCode.childrens)
 
 
 class MovieTest(unittest.TestCase):

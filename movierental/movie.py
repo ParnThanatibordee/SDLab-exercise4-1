@@ -62,11 +62,11 @@ class PriceCode(Enum):
         current_date_time = datetime.datetime.now()
         date = current_date_time.date()
         if date.year == movie.get_year():
-            price_code = self.new_release
+            price_code = cls.new_release
         elif movie.is_genre("Children"):
-            price_code = self.childrens
+            price_code = cls.childrens
         else:
-            price_code = self.normal
+            price_code = cls.normal
         return price_code
 
 
