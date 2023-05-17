@@ -6,7 +6,40 @@ Author: Thanatibordee Sihaboonthong
 import unittest
 from movierental.customer import Customer
 from movierental.rental import Rental
-from movierental.movie import Movie, PriceCode
+from movierental.movie import Movie, PriceCode, MovieCatalog
+
+
+class MovieCatalogTest(unittest.TestCase):
+    """Tests of the MovieCatalog Enum class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up a Movie class before test."""
+
+        cls.new_movie = Movie("Mulan", 2000, ['demo'])
+        cls.regular_movie = Movie("CitizenFour", 2000, ['demo'])
+        cls.childrens_movie = Movie("Frozen", 2000, ['demo'])
+
+    def setUp(self):
+        """Set up a Movie catalog before each test"""
+
+        self.movie_catalog = MovieCatalog()
+
+    def test_initial_movie(self):
+        try:
+            temp_catalog = self.movie_catalog.initial_movie()
+            self.assertTrue(isinstance(temp_catalog, list))
+        except:
+            self.fail("initial_movie() raised Exception unexpectedly")
+
+    def test_get_movie(self):
+        if len(self.movie_catalog.data) > 0:
+            temp_movie = self.movie_catalog.data[0]
+            self.assertEqual(self.movie_catalog.get_movie(temp_movie.get_title()), temp_movie)
+
+    def test_get_unexist_movie(self):
+        if len(self.movie_catalog.data) > 0:
+            self.assertIsNone(self.movie_catalog.get_movie(""))
 
 
 class PriceCodeTest(unittest.TestCase):
@@ -14,7 +47,7 @@ class PriceCodeTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Set up an PriceCode Enum before test."""
+        """Set up PriceCode and Movie Enum before test."""
 
         cls.new_release = PriceCode.new_release
         cls.normal = PriceCode.normal
@@ -95,7 +128,7 @@ class MovieTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Set up an Movie class before test."""
+        """Set up a Movie class before test."""
 
         cls.new_movie = Movie("Mulan", 2000, ['demo'])
         cls.regular_movie = Movie("CitizenFour", 2000, ['demo'])
