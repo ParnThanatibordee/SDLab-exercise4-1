@@ -29,8 +29,8 @@ class MovieCatalogTest(unittest.TestCase):
         try:
             temp_catalog = self.movie_catalog.initial_movie()
             self.assertTrue(isinstance(temp_catalog, list))
-        except:
-            self.fail("initial_movie() raised Exception unexpectedly")
+        except IOError:
+            self.fail("initial_movie() raised IO Exception unexpectedly")
 
     def test_get_movie(self):
         if len(self.movie_catalog.data) > 0:
